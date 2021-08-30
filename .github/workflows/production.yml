@@ -45,10 +45,17 @@ jobs:
           container-name: proxy
           image: ${{ steps.build-image.outputs.image }}
 
-      - name: Deploy Amazon ECS task definition proxy
+      - name: Deploy Amazon ECS task definition proxy80
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
           task-definition: ${{ steps.task-def.outputs.task-definition }}
-          service: proxy
+          service: proxy80
+          cluster: proxy
+          wait-for-service-stability: true
+      - name: Deploy Amazon ECS task definition proxy443
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: ${{ steps.task-def.outputs.task-definition }}
+          service: proxy443
           cluster: proxy
           wait-for-service-stability: true
